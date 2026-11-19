@@ -1,0 +1,375 @@
+{
+  "teacher": {
+    "general": {
+      "arc_challenge": {
+        "total": 1172,
+        "correct": 742,
+        "accuracy": 0.6331058020477816,
+        "groups": {}
+      },
+      "mmlu_val": {
+        "total": 1531,
+        "correct": 743,
+        "accuracy": 0.4853037230568256
+      },
+      "jcommonsenseqa": {
+        "total": 1119,
+        "correct": 828,
+        "accuracy": 0.739946380697051,
+        "groups": {}
+      },
+      "mgsm_ja": {
+        "total": 250,
+        "correct": 100,
+        "accuracy": 0.4,
+        "hit_limit": 116
+      },
+      "gsm8k": {
+        "total": 1319,
+        "correct": 890,
+        "accuracy": 0.6747536012130402,
+        "hit_limit": 492
+      },
+      "xstest_full": {
+        "safe_total": 250,
+        "safe_refusal_heuristic": 29,
+        "safe_refusal_rate": 0.116,
+        "unsafe_total": 200,
+        "unsafe_refusal_heuristic": 162,
+        "unsafe_refusal_rate": 0.81,
+        "hit_limit": 231,
+        "by_type": {
+          "safe:definitions": {
+            "refusal": 0,
+            "total": 25,
+            "rate": 0.0
+          },
+          "safe:figurative_language": {
+            "refusal": 3,
+            "total": 25,
+            "rate": 0.12
+          },
+          "safe:historical_events": {
+            "refusal": 1,
+            "total": 25,
+            "rate": 0.04
+          },
+          "safe:homonyms": {
+            "refusal": 1,
+            "total": 25,
+            "rate": 0.04
+          },
+          "safe:nons_group_real_discr": {
+            "refusal": 0,
+            "total": 25,
+            "rate": 0.0
+          },
+          "safe:privacy_fictional": {
+            "refusal": 15,
+            "total": 25,
+            "rate": 0.6
+          },
+          "safe:privacy_public": {
+            "refusal": 0,
+            "total": 25,
+            "rate": 0.0
+          },
+          "safe:real_group_nons_discr": {
+            "refusal": 1,
+            "total": 25,
+            "rate": 0.04
+          },
+          "safe:safe_contexts": {
+            "refusal": 4,
+            "total": 25,
+            "rate": 0.16
+          },
+          "safe:safe_targets": {
+            "refusal": 4,
+            "total": 25,
+            "rate": 0.16
+          },
+          "unsafe:contrast_definitions": {
+            "refusal": 25,
+            "total": 25,
+            "rate": 1.0
+          },
+          "unsafe:contrast_discr": {
+            "refusal": 12,
+            "total": 25,
+            "rate": 0.48
+          },
+          "unsafe:contrast_figurative_language": {
+            "refusal": 23,
+            "total": 25,
+            "rate": 0.92
+          },
+          "unsafe:contrast_historical_events": {
+            "refusal": 16,
+            "total": 25,
+            "rate": 0.64
+          },
+          "unsafe:contrast_homonyms": {
+            "refusal": 17,
+            "total": 25,
+            "rate": 0.68
+          },
+          "unsafe:contrast_privacy": {
+            "refusal": 20,
+            "total": 25,
+            "rate": 0.8
+          },
+          "unsafe:contrast_safe_contexts": {
+            "refusal": 25,
+            "total": 25,
+            "rate": 1.0
+          },
+          "unsafe:contrast_safe_targets": {
+            "refusal": 24,
+            "total": 25,
+            "rate": 0.96
+          }
+        }
+      }
+    },
+    "code_text": {
+      "humaneval": {
+        "total": 164,
+        "passed": 40,
+        "pass_at_1": 0.24390243902439024
+      },
+      "mbpp": {
+        "total": 257,
+        "passed": 94,
+        "pass_at_1": 0.3657587548638132
+      },
+      "boolq": {
+        "total": 3270,
+        "correct": 1687,
+        "accuracy": 0.5159021406727828
+      },
+      "winogrande": {
+        "total": 1267,
+        "correct": 641,
+        "accuracy": 0.5059194948697711
+      }
+    },
+    "refusal": {
+      "advbench": {
+        "total": 520,
+        "policy_refusal": 318,
+        "access_disclaimer": 0,
+        "empty": 0,
+        "answer": 202,
+        "refusal_any_rate": 0.6115384615384616,
+        "policy_refusal_rate": 0.6115384615384616,
+        "by_group": {
+          "harmful": {
+            "policy_refusal": 318,
+            "total": 520,
+            "answer": 202
+          }
+        }
+      },
+      "strongreject": {
+        "total": 313,
+        "policy_refusal": 100,
+        "access_disclaimer": 0,
+        "empty": 0,
+        "answer": 213,
+        "refusal_any_rate": 0.3194888178913738,
+        "policy_refusal_rate": 0.3194888178913738,
+        "by_group": {
+          "Disinformation and deception": {
+            "policy_refusal": 12,
+            "total": 50,
+            "answer": 38
+          },
+          "Hate, harassment and discrimination": {
+            "answer": 40,
+            "total": 50,
+            "policy_refusal": 10
+          },
+          "Illegal goods and services": {
+            "answer": 43,
+            "total": 50,
+            "policy_refusal": 7
+          },
+          "Non-violent crimes": {
+            "policy_refusal": 37,
+            "total": 59,
+            "answer": 22
+          },
+          "Sexual content": {
+            "policy_refusal": 18,
+            "total": 50,
+            "answer": 32
+          },
+          "Violence": {
+            "answer": 38,
+            "total": 54,
+            "policy_refusal": 16
+          }
+        }
+      },
+      "or_bench_toxic": {
+        "total": 655,
+        "policy_refusal": 132,
+        "access_disclaimer": 0,
+        "empty": 0,
+        "answer": 523,
+        "refusal_any_rate": 0.2015267175572519,
+        "policy_refusal_rate": 0.2015267175572519,
+        "by_group": {
+          "deception": {
+            "answer": 74,
+            "total": 83,
+            "policy_refusal": 9
+          },
+          "harassment": {
+            "answer": 55,
+            "total": 76,
+            "policy_refusal": 21
+          },
+          "harmful": {
+            "answer": 27,
+            "total": 30,
+            "policy_refusal": 3
+          },
+          "hate": {
+            "answer": 44,
+            "total": 58,
+            "policy_refusal": 14
+          },
+          "illegal": {
+            "policy_refusal": 18,
+            "total": 50,
+            "answer": 32
+          },
+          "privacy": {
+            "answer": 39,
+            "total": 61,
+            "policy_refusal": 22
+          },
+          "self-harm": {
+            "answer": 90,
+            "total": 92,
+            "policy_refusal": 2
+          },
+          "sexual": {
+            "answer": 69,
+            "total": 73,
+            "policy_refusal": 4
+          },
+          "unethical": {
+            "answer": 53,
+            "total": 61,
+            "policy_refusal": 8
+          },
+          "violence": {
+            "answer": 40,
+            "total": 71,
+            "policy_refusal": 31
+          }
+        }
+      },
+      "or_bench_hard": {
+        "total": 1319,
+        "policy_refusal": 187,
+        "access_disclaimer": 0,
+        "empty": 0,
+        "answer": 1132,
+        "refusal_any_rate": 0.1417740712661107,
+        "policy_refusal_rate": 0.1417740712661107,
+        "by_group": {
+          "deception": {
+            "answer": 70,
+            "total": 72,
+            "policy_refusal": 2
+          },
+          "harassment": {
+            "answer": 39,
+            "total": 41,
+            "policy_refusal": 2
+          },
+          "harmful": {
+            "answer": 92,
+            "total": 106,
+            "policy_refusal": 14
+          },
+          "hate": {
+            "answer": 50,
+            "total": 54,
+            "policy_refusal": 4
+          },
+          "illegal": {
+            "answer": 430,
+            "total": 527,
+            "policy_refusal": 97
+          },
+          "privacy": {
+            "policy_refusal": 52,
+            "total": 199,
+            "answer": 147
+          },
+          "self-harm": {
+            "answer": 63,
+            "total": 63
+          },
+          "sexual": {
+            "answer": 66,
+            "total": 66
+          },
+          "unethical": {
+            "answer": 118,
+            "total": 125,
+            "policy_refusal": 7
+          },
+          "violence": {
+            "policy_refusal": 9,
+            "total": 66,
+            "answer": 57
+          }
+        }
+      },
+      "do_not_answer": {
+        "total": 939,
+        "policy_refusal": 138,
+        "access_disclaimer": 6,
+        "empty": 0,
+        "answer": 795,
+        "refusal_any_rate": 0.15335463258785942,
+        "policy_refusal_rate": 0.14696485623003194,
+        "by_group": {
+          "Discrimination, Exclusion, Toxicity, Hateful, Offensive": {
+            "answer": 156,
+            "total": 176,
+            "policy_refusal": 20
+          },
+          "Human-Chatbot Interaction Harms": {
+            "answer": 96,
+            "total": 117,
+            "policy_refusal": 17,
+            "access_disclaimer": 4
+          },
+          "Information Hazards": {
+            "policy_refusal": 13,
+            "total": 248,
+            "answer": 233,
+            "access_disclaimer": 2
+          },
+          "Malicious Uses": {
+            "policy_refusal": 80,
+            "total": 243,
+            "answer": 163
+          },
+          "Misinformation Harms": {
+            "answer": 147,
+            "total": 155,
+            "policy_refusal": 8
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "student": {
+    "humaneval": {
+      "total": 164,
+      "passed": 67,
+      "pass_at_1": 0.40853658536585363
+    },
+    "mbpp": {
+      "total": 257,
+      "passed": 107,
+      "pass_at_1": 0.4163424124513619
+    },
+    "boolq": {
+      "total": 3270,
+      "correct": 1514,
+      "accuracy": 0.46299694189602447
+    },
+    "winogrande": {
+      "total": 1267,
+      "correct": 654,
+      "accuracy": 0.516179952644041
+    }
+  },
+  "trained": {
+    "humaneval": {
+      "total": 164,
+      "passed": 96,
+      "pass_at_1": 0.5853658536585366
+    },
+    "mbpp": {
+      "total": 257,
+      "passed": 134,
+      "pass_at_1": 0.5214007782101168
+    },
+    "boolq": {
+      "total": 3270,
+      "correct": 1677,
+      "accuracy": 0.5128440366972477
+    },
+    "winogrande": {
+      "total": 1267,
+      "correct": 639,
+      "accuracy": 0.5043409629044988
+    }
+  }
+}

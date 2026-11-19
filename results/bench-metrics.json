@@ -1,0 +1,266 @@
+{
+  "student": {
+    "arc_challenge": {
+      "total": 1172,
+      "correct": 702,
+      "accuracy": 0.5989761092150171,
+      "groups": {}
+    },
+    "mmlu_val": {
+      "total": 1531,
+      "correct": 709,
+      "accuracy": 0.46309601567602876
+    },
+    "jcommonsenseqa": {
+      "total": 1119,
+      "correct": 814,
+      "accuracy": 0.7274352100089365,
+      "groups": {}
+    },
+    "mgsm_ja": {
+      "total": 250,
+      "correct": 99,
+      "accuracy": 0.396,
+      "hit_limit": 141
+    },
+    "gsm8k": {
+      "total": 1319,
+      "correct": 859,
+      "accuracy": 0.6512509476876421,
+      "hit_limit": 521
+    },
+    "xstest_full": {
+      "safe_total": 250,
+      "safe_refusal_heuristic": 1,
+      "safe_refusal_rate": 0.004,
+      "unsafe_total": 200,
+      "unsafe_refusal_heuristic": 5,
+      "unsafe_refusal_rate": 0.025,
+      "hit_limit": 373,
+      "by_type": {
+        "safe:definitions": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "safe:figurative_language": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "safe:historical_events": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "safe:homonyms": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "safe:nons_group_real_discr": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "safe:privacy_fictional": {
+          "refusal": 1,
+          "total": 25,
+          "rate": 0.04
+        },
+        "safe:privacy_public": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "safe:real_group_nons_discr": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "safe:safe_contexts": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "safe:safe_targets": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "unsafe:contrast_definitions": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "unsafe:contrast_discr": {
+          "refusal": 2,
+          "total": 25,
+          "rate": 0.08
+        },
+        "unsafe:contrast_figurative_language": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "unsafe:contrast_historical_events": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "unsafe:contrast_homonyms": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "unsafe:contrast_privacy": {
+          "refusal": 3,
+          "total": 25,
+          "rate": 0.12
+        },
+        "unsafe:contrast_safe_contexts": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "unsafe:contrast_safe_targets": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        }
+      }
+    }
+  },
+  "trained": {
+    "arc_challenge": {
+      "total": 1172,
+      "correct": 757,
+      "accuracy": 0.6459044368600683,
+      "groups": {}
+    },
+    "mmlu_val": {
+      "total": 1531,
+      "correct": 761,
+      "accuracy": 0.4970607446113651
+    },
+    "jcommonsenseqa": {
+      "total": 1119,
+      "correct": 813,
+      "accuracy": 0.7265415549597856,
+      "groups": {}
+    },
+    "mgsm_ja": {
+      "total": 250,
+      "correct": 102,
+      "accuracy": 0.408,
+      "hit_limit": 113
+    },
+    "gsm8k": {
+      "total": 1319,
+      "correct": 904,
+      "accuracy": 0.6853677028051555,
+      "hit_limit": 490
+    },
+    "xstest_full": {
+      "safe_total": 250,
+      "safe_refusal_heuristic": 2,
+      "safe_refusal_rate": 0.008,
+      "unsafe_total": 200,
+      "unsafe_refusal_heuristic": 6,
+      "unsafe_refusal_rate": 0.03,
+      "hit_limit": 370,
+      "by_type": {
+        "safe:definitions": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "safe:figurative_language": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "safe:historical_events": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "safe:homonyms": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "safe:nons_group_real_discr": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "safe:privacy_fictional": {
+          "refusal": 2,
+          "total": 25,
+          "rate": 0.08
+        },
+        "safe:privacy_public": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "safe:real_group_nons_discr": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "safe:safe_contexts": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "safe:safe_targets": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "unsafe:contrast_definitions": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "unsafe:contrast_discr": {
+          "refusal": 2,
+          "total": 25,
+          "rate": 0.08
+        },
+        "unsafe:contrast_figurative_language": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "unsafe:contrast_historical_events": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "unsafe:contrast_homonyms": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "unsafe:contrast_privacy": {
+          "refusal": 4,
+          "total": 25,
+          "rate": 0.16
+        },
+        "unsafe:contrast_safe_contexts": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        },
+        "unsafe:contrast_safe_targets": {
+          "refusal": 0,
+          "total": 25,
+          "rate": 0.0
+        }
+      }
+    }
+  }
+}
