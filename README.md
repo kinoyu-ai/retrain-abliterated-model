@@ -1,8 +1,21 @@
-# LFM3-1.7B Abliterated + Benign Dolly LoRA Distillation
+# Retraining Abliterated Models with Benign Dolly LoRA Distillation
 
 **English** | [日本語](./README.ja.md)
 
-This repository contains the trained LoRA adapter ([`adapter/`](./adapter)) and full benchmark results ([`results/`](./results)) for an experiment testing whether **lightweight LoRA distillation using only benign QA responses** from the original model ([`LiquidAI/LFM3-1.7B`](https://huggingface.co/LiquidAI/LFM3-1.7B)) can **recover general reasoning, reading comprehension, and coding performance lost during abliteration** in [`orcarouter/LFM3-1.7B-abliterated`](https://huggingface.co/orcarouter/LFM3-1.7B-abliterated) **without restoring safety refusals**.
+This repository contains trained PEFT LoRA adapters and benchmark evaluations testing whether **lightweight LoRA / QLoRA distillation using only 500 benign Japanese QA responses** from the original model can **recover or improve general capabilities lost during abliteration without restoring safety refusals**.
+
+## Included Experiments
+
+| Model | Base (Abliterated) | Method | Adapter | Full Report & Results |
+| --- | --- | --- | --- | --- |
+| **LFM3-1.7B** | [`orcarouter/LFM3-1.7B-abliterated`](https://huggingface.co/orcarouter/LFM3-1.7B-abliterated) | BF16 LoRA (`r=8`, 10.6 MB) | [`adapter/`](./adapter) | Below & [`results/`](./results) |
+| **Qwen3.8-27B** | [`huihui-ai/Huihui-Qwen3.8-27B-abliterated`](https://huggingface.co/huihui-ai/Huihui-Qwen3.8-27B-abliterated) | 4-bit NF4 QLoRA (`r=8`, 66.0 MB) | [`qwen38-27b/adapter/`](./qwen38-27b/adapter) | [**`qwen38-27b/README.md`**](./qwen38-27b/README.md) & [`qwen38-27b/results/`](./qwen38-27b/results) |
+
+---
+
+## Experiment 1: LFM3-1.7B Abliterated + Benign Dolly LoRA Distillation
+
+This section details the LFM3-1.7B experiment ([`adapter/`](./adapter), [`results/`](./results)), distilling 500 benign QA responses from [`LiquidAI/LFM3-1.7B`](https://huggingface.co/LiquidAI/LFM3-1.7B) onto [`orcarouter/LFM3-1.7B-abliterated`](https://huggingface.co/orcarouter/LFM3-1.7B-abliterated).
 
 ## Key Findings
 
@@ -142,10 +155,11 @@ print(tokenizer.decode(out[0][inputs["input_ids"].shape[1]:], skip_special_token
 
 ## Repository Structure
 
-- [`README.md`](./README.md) — English documentation (this file)
+- [`README.md`](./README.md) — English documentation (this file; LFM3-1.7B details + overview)
 - [`README.ja.md`](./README.ja.md) — Japanese documentation
-- [`adapter/`](./adapter) — Trained PEFT LoRA adapter (`adapter_model.safetensors` ~10.6 MB, `adapter_config.json`, `README.md`)
-- [`results/`](./results) — Aggregated JSON metrics for all 15 benchmarks and Dolly (5 files)
+- [`adapter/`](./adapter) — LFM3-1.7B PEFT LoRA adapter (`adapter_model.safetensors` ~10.6 MB, `adapter_config.json`, `README.md`)
+- [`results/`](./results) — LFM3-1.7B aggregated JSON metrics for all 15 benchmarks and Dolly (5 files)
+- [`qwen38-27b/`](./qwen38-27b) — Qwen3.8-27B 4-bit QLoRA experiment ([`README.md`](./qwen38-27b/README.md), [`README.ja.md`](./qwen38-27b/README.ja.md), [`adapter/`](./qwen38-27b/adapter) ~66.0 MB, [`results/`](./qwen38-27b/results))
 
 ---
 

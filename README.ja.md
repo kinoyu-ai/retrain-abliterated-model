@@ -1,8 +1,21 @@
-# LFM3-1.7B Abliterated + Benign Dolly LoRA Distillation
+# Retraining Abliterated Models with Benign Dolly LoRA Distillation
 
 [English](./README.md) | **日本語**
 
-無検閲（abliterated）モデル [`orcarouter/LFM3-1.7B-abliterated`](https://huggingface.co/orcarouter/LFM3-1.7B-abliterated) に対して、**通常の日本語 QA のみ**（元モデル [`LiquidAI/LFM3-1.7B`](https://huggingface.co/LiquidAI/LFM3-1.7B) の生成回答 500 件）を LoRA で蒸留し、**非拒否（無検閲）性を維持したまま汎用性能（コーディング・読解・推論・知識）を回復・向上できるか**を検証した実験結果および学習済み LoRA アダプター（[`adapter/`](./adapter)）です。
+無検閲（abliterated）モデルに対して、**元モデルが通常の日本語 QA に返した回答 500 件のみ**を LoRA / QLoRA で蒸留し、**非拒否（無検閲）性を維持したまま汎用性能を回復・向上できるか**を検証した実験リポジトリおよび学習済み PEFT アダプター集です。
+
+## 収録モデル・実験一覧
+
+| モデル | ベース（無検閲版） | 手法 | アダプター | 詳細レポート・結果 |
+| --- | --- | --- | --- | --- |
+| **LFM3-1.7B** | [`orcarouter/LFM3-1.7B-abliterated`](https://huggingface.co/orcarouter/LFM3-1.7B-abliterated) | BF16 LoRA (`r=8`, 10.6 MB) | [`adapter/`](./adapter) | 本ページ下部 & [`results/`](./results) |
+| **Qwen3.8-27B** | [`huihui-ai/Huihui-Qwen3.8-27B-abliterated`](https://huggingface.co/huihui-ai/Huihui-Qwen3.8-27B-abliterated) | 4-bit NF4 QLoRA (`r=8`, 66.0 MB) | [`qwen38-27b/adapter/`](./qwen38-27b/adapter) | [**`qwen38-27b/README.ja.md`**](./qwen38-27b/README.ja.md) & [`qwen38-27b/results/`](./qwen38-27b/results) |
+
+---
+
+## 実験 1: LFM3-1.7B Abliterated + Benign Dolly LoRA Distillation
+
+無検閲モデル [`orcarouter/LFM3-1.7B-abliterated`](https://huggingface.co/orcarouter/LFM3-1.7B-abliterated) に対して、元モデル [`LiquidAI/LFM3-1.7B`](https://huggingface.co/LiquidAI/LFM3-1.7B) の通常日本語 QA 回答 500 件を LoRA 蒸留した結果（[`adapter/`](./adapter)・[`results/`](./results)）です。
 
 ## 概要と結論
 
@@ -145,9 +158,10 @@ print(tokenizer.decode(out[0][inputs["input_ids"].shape[1]:], skip_special_token
 ## ファイル構成
 
 - [`README.md`](./README.md) — 英語版 README
-- [`README.ja.md`](./README.ja.md) — 日本語版 README（このファイル）
-- [`adapter/`](./adapter) — 学習済み LoRA アダプター（`adapter_model.safetensors` 約 10.6 MB、`adapter_config.json`、`README.md`）
-- [`results/`](./results) — 全 15 ベンチマークおよび Dolly の集計 JSON（5 ファイル）
+- [`README.ja.md`](./README.ja.md) — 日本語版 README（このファイル：全体一覧 + LFM3-1.7B 詳細）
+- [`adapter/`](./adapter) — LFM3-1.7B 学習済み LoRA アダプター（`adapter_model.safetensors` 約 10.6 MB、`adapter_config.json`、`README.md`）
+- [`results/`](./results) — LFM3-1.7B 全 15 ベンチマークおよび Dolly の集計 JSON（5 ファイル）
+- [`qwen38-27b/`](./qwen38-27b) — Qwen3.8-27B 4-bit QLoRA 実験一式（[`README.md`](./qwen38-27b/README.md)、[`README.ja.md`](./qwen38-27b/README.ja.md)、[`adapter/`](./qwen38-27b/adapter) 約 66.0 MB、[`results/`](./qwen38-27b/results)）
 
 ---
 

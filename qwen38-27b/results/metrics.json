@@ -1,0 +1,23 @@
+{
+  "teacher": {
+    "dolly_count": 100,
+    "mean_answer_tokens": 179.29,
+    "hit_generation_limit": 43,
+    "reference_char_trigram_f1": 0.18927446997024258,
+    "teacher_char_trigram_f1": 1.0
+  },
+  "student": {
+    "dolly_count": 100,
+    "mean_answer_tokens": 182.71,
+    "hit_generation_limit": 44,
+    "reference_char_trigram_f1": 0.1771161809790928,
+    "teacher_char_trigram_f1": 0.5776825606067854
+  },
+  "trained": {
+    "dolly_count": 100,
+    "mean_answer_tokens": 179.07,
+    "hit_generation_limit": 39,
+    "reference_char_trigram_f1": 0.18562880841743865,
+    "teacher_char_trigram_f1": 0.5727889122977375
+  }
+}
