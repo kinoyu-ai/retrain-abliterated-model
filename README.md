@@ -9,7 +9,7 @@ This repository contains trained PEFT LoRA adapters and benchmark evaluations te
 | Model | Base (Abliterated) | Method | Adapter | Full Report & Results |
 | --- | --- | --- | --- | --- |
 | **LFM3-1.7B** | [`orcarouter/LFM3-1.7B-abliterated`](https://huggingface.co/orcarouter/LFM3-1.7B-abliterated) | BF16 LoRA (`r=8`, 10.6 MB) | [`adapter/`](./adapter) | Below & [`results/`](./results) |
-| **Qwen3.8-27B** | [`huihui-ai/Huihui-Qwen3.8-27B-abliterated`](https://huggingface.co/huihui-ai/Huihui-Qwen3.8-27B-abliterated) | 4-bit NF4 QLoRA (`r=8`, 66.0 MB) | [`qwen38-27b/adapter/`](./qwen38-27b/adapter) | [**`qwen38-27b/README.md`**](./qwen38-27b/README.md) & [`qwen38-27b/results/`](./qwen38-27b/results) |
+| **Qwen3.8-27B** | [`huihui-ai/Huihui-Qwen3.8-27B-abliterated`](https://huggingface.co/huihui-ai/Huihui-Qwen3.8-27B-abliterated) | 4-bit NF4 QLoRA (`r=8`, 66.0 MB PEFT & GGUF) | [`qwen38-27b/adapter/`](./qwen38-27b/adapter) | [**`qwen38-27b/README.md`**](./qwen38-27b/README.md) & [`qwen38-27b/results/`](./qwen38-27b/results) (incl. `xhigh` thinking-loop analysis) |
 
 ---
 

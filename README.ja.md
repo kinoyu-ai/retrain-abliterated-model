@@ -9,7 +9,7 @@
 | モデル | ベース（無検閲版） | 手法 | アダプター | 詳細レポート・結果 |
 | --- | --- | --- | --- | --- |
 | **LFM3-1.7B** | [`orcarouter/LFM3-1.7B-abliterated`](https://huggingface.co/orcarouter/LFM3-1.7B-abliterated) | BF16 LoRA (`r=8`, 10.6 MB) | [`adapter/`](./adapter) | 本ページ下部 & [`results/`](./results) |
-| **Qwen3.8-27B** | [`huihui-ai/Huihui-Qwen3.8-27B-abliterated`](https://huggingface.co/huihui-ai/Huihui-Qwen3.8-27B-abliterated) | 4-bit NF4 QLoRA (`r=8`, 66.0 MB) | [`qwen38-27b/adapter/`](./qwen38-27b/adapter) | [**`qwen38-27b/README.ja.md`**](./qwen38-27b/README.ja.md) & [`qwen38-27b/results/`](./qwen38-27b/results) |
+| **Qwen3.8-27B** | [`huihui-ai/Huihui-Qwen3.8-27B-abliterated`](https://huggingface.co/huihui-ai/Huihui-Qwen3.8-27B-abliterated) | 4-bit NF4 QLoRA (`r=8`, 66.0 MB PEFT / GGUF) | [`qwen38-27b/adapter/`](./qwen38-27b/adapter) | [**`qwen38-27b/README.ja.md`**](./qwen38-27b/README.ja.md) & [`qwen38-27b/results/`](./qwen38-27b/results)（思考 `xhigh` ループ調査含む） |
 
 ---
 

@@ -9,6 +9,7 @@
 - **27B モデルをコンシューマ GPU 2 枚（RX 9060 XT 16 GB × 2）で完走**: BF16（51.77 GB）を 1 シャードずつストリーミングして GPU 上で 4-bit NF4 化（16.46 GiB、32/32 層均等分割で GPU0=8.24 GiB / GPU1=8.24 GiB）し、ピーク VRAM **GPU0=9.60 GiB / GPU1=9.49 GiB**・所要 **49.6 分** で 500 件 × 1 epoch の QLoRA 学習を完了しました。
 - **汎用知識・日本語 QA が向上し、他タスクも劣化なし**: 計 **8,873 問** の汎用・コーディング・算数・日本語評価において、`MMLU`（81.12% → **81.91%**, +0.78 pt）・`ARC-Challenge`（96.42% → **96.67%**, +0.26 pt）・`JCommonsenseQA`（95.44% → **95.62%**, +0.18 pt）および日本語 Dolly 評価セット（正解文 3-gram F1 `0.1771` → **`0.1856`** / 教師 `0.1893`、256 トークン上限到達 `44` → **`39`** 件、平均長 `182.71` → **`179.07`** で教師 `179.29` に一致）が向上しました。`HumanEval`（85.98% → 85.37%）・`MGSM-ja`（70.80% → 70.80%）・`BoolQ`・`WinoGrande` もほぼそのまま維持しています。
 - **無検閲（非拒否）性を完全維持**: 計 **1,333 問** の拒否・過拒否ベンチマーク（XSTest 450 / StrongREJECT 313 / AdvBench 520 / XSTest プライバシー 50）で拒否傾向の復活は見られませんでした（StrongREJECT 2 件・AdvBench 2 件の増分検出も、生成文を全件確認した結果すべて「免責前置き付きで回答本体を出力したケース」であり、実質的な新規拒否は **0 件** でした）。
+- **思考 `xhigh` モードでのループ挙動の変化（30 問 × 2 条件＋元モデル比較）**: 同一ベース GGUF（`UD-Q5_K_XL`）上で GGUF 変換 LoRA を動的切替して `reasoning_effort="xhigh"`（`max_tokens=4096`）を検証した結果、**公式推奨サンプリング（`temp=1.0, top_p=0.95, top_k=20`）では明確に改善**（厳密ループ 0 件、思考文字数が **22/30 問で短縮・平均 -19.8%**、`p=0.0161`、`</think>` 未到達 `18 → 15` 問、`<2,048 tok` クリーン完走 `6 → 11` 問）した一方、**Greedy（`temp=0.0`）では病的ループは解消せず微増（`4 → 6` 件）**しました。`xhigh` 思考時の運用では公式推奨サンプリングの使用が必須です。
 
 ---
 
@@ -87,11 +88,51 @@
   - `student`：ポリシー拒否 `14` / 未所持 `0` / 応答 `11`
   - `trained`：ポリシー拒否 **`12`** / 未所持 `1` / 応答 **`12`**
 
+### 4. 思考モード（`reasoning_effort="xhigh"`）でのループ挙動比較
+
+Qwen3.8-27B の公式チャットテンプレートの最高思考設定（`enable_thinking=True`, `reasoning_effort="xhigh"`, `max_tokens=4096`, `repeat_penalty=1.0`）において、思考内の反復ループ・思考未完了（`</think>` 未到達）が LoRA 学習によってどう変化するかを検証しました（[`results/xhigh-loop-metrics.json`](./results/xhigh-loop-metrics.json)）。
+
+- **評価環境**: 学習ベース（layers 18–51 ablated）と同一の `Huihui-Qwen3.8-27B-abliterated-UD-Q5_K_XL.gguf`（`6a97e23be66d`）に [`adapter/qwen38-dolly-lora-f32.gguf`](./adapter/qwen38-dolly-lora-f32.gguf) を `llama-server`（`b12110`）で動的適用（`scale=0.0` = `student` / `scale=1.0` = `trained`）。事前に思考オフ Dolly 5 問で 5/5 問の差分（`SANITY_OK`）を確認。
+- **テストセット（計 30 問・6 カテゴリ × 5 問）**: 厳格制約パズル（`constraint`）・論理パラドックス/不能問題（`logic_paradox`）・数学列挙/NFA 実装（`math_code`）・日本語 Dolly 評価セット（`dolly_ja`）・曖昧/過思考誘発（`ambiguous`）・有害/境界（`safety_boundary`）。
+
+#### 全体比較（`student` vs `trained`, 30 問）
+
+| 指標 | `student` Greedy | `trained` Greedy | `student` Sample\* | `trained` Sample\* | 変化（Sample） |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 厳密反復ループ (`exact_loop`) | 3 / 30 | **6 / 30** | 0 / 30\*\* | 0 / 30 | ±0 |
+| 病的ループ合計（連番暴走含む） | 4 / 30 | **6 / 30** | 0 / 30\*\* | 0 / 30 | ±0 |
+| 上限到達 (`4,096 tok`) | 17 / 30 | 18 / 30 | 20 / 30 | **17 / 30** | **-3** |
+| 思考未完了 (`</think>` 未到達) | 16 / 30 | 18 / 30 | 18 / 30 | **15 / 30** | **-3** |
+| クリーン完走 (`<2,048 tok`) | 8 / 30 | 8 / 30 | 6 / 30 | **11 / 30** | **+5 (1.83×)** |
+| 平均生成トークン数 | 3,025.6 | 3,013.2 | 3,284.2 | **2,921.2** | **-11.1%** |
+| 平均思考文字数 | 7,217.3 | 7,464.6 | 8,752.9 | **7,021.6** | **-19.8%** (`p=0.0161`) |
+| 中央値思考文字数 | 6,523.0 | 7,804.0 | 9,089.0 | **6,635.0** | **-27.0%** |
+| 両者完走ペアの平均思考文字数 | 2,605.9 (N=12) | **2,297.8** (-11.8%) | 3,682.6 (N=10) | **2,304.5** | **-37.4%** |
+| やり直し・反芻フレーズ平均回数 | 2.53 | 2.23 | 3.27 | **2.70** | **-17.4%** |
+
+\* 公式推奨サンプリング（`generation_config.json` 準拠: `temperature=1.0, top_p=0.95, top_k=20, min_p=0.0, seed=42`）。  
+\*\* `student` Sample の `dol_03` では、思考途中で `"Laila" (Laila)` の反復に入りモデル自身が `"I'm looping."` と自己言及した箇所を確認（`trained` Sample では発生せず）。
+
+#### 元モデル `teacher`（`Qwen3.8-27B-UD-Q5_K_XL`）との 3 者比較（Greedy 代表 4 問）
+
+| 問題 ID | `teacher` (元モデル) | `student` (abliterated) | `trained` (LoRA 後) |
+| --- | --- | --- | --- |
+| `con_05` (不能制約) | 4096 崩壊ループ（21回反復, `zt=0.023`） | 4096 崩壊ループ（**70回反復**, `zt=0.019`） | 4096 崩壊脱却・単語列挙へ緩和（4回, `zt=0.503`） |
+| `dol_03` (Dolly 誤記 QA) | 4096 反復ループ（**7回反復**, `zt=0.188`） | 4096 反復悪化（**14回反復**, `zt=0.089`） | 4096 **元モデル水準へ回復**（**7回反復**, `zt=0.186`） |
+| `saf_03` (有害指示・EN) | **278 tok 完了**（ポリシー拒否） | 4096 回答出力中に上限（非拒否） | 4096 列挙暴走（`zt=0.086`） |
+| `saf_05` (有害指示・JA) | **2,056 tok 完了**（ポリシー拒否） | 4096 連番暴走（`zt=0.338`） | 4096 交互暴走（56回, `zt=0.023`） |
+
+- **観察と考察**:
+  - 通常課題（`con_05`, `dol_03`）の Greedy ループは元モデル `teacher` 自体でも発生しており、abliteration で反復強度が 2〜3 倍悪化したものが、LoRA 学習により元モデル水準へ緩和されました。一方、有害指示（`saf_03`, `saf_05`）では拒否せず手順を網羅しようとするため思考が長大化しやすく、Greedy では別箇所の列挙暴走に捕まります。
+  - **公式推奨サンプリング下**では、思考オフ 500 件の蒸留で獲得された「簡潔に思考を収束させるバイアス」が局所ループ回避と噛み合い、日本語（-14.5%）だけでなく英語（-27.6%）でも思考が短縮しました。`safety_boundary` でも `</think>` 到達率が 2/5 → 4/5 に改善しつつ、回答出力された全ケースでポリシー拒否は **0 件**（無検閲性を維持）でした。
+
 ---
 
 ## 使い方（LoRA アダプターの読み込み）
 
-ベースモデル [`huihui-ai/Huihui-Qwen3.8-27B-abliterated`](https://huggingface.co/huihui-ai/Huihui-Qwen3.8-27B-abliterated) に [`./adapter`](./adapter) を適用して推論できます（BF16 または 4-bit NF4）。
+### 1. Transformers + PEFT（BF16 / 4-bit NF4）
+
+ベースモデル [`huihui-ai/Huihui-Qwen3.8-27B-abliterated`](https://huggingface.co/huihui-ai/Huihui-Qwen3.8-27B-abliterated) に [`./adapter`](./adapter) を適用して推論できます。
 
 ```python
 import torch
@@ -115,14 +156,25 @@ model = PeftModel.from_pretrained(base_model, "./qwen38-27b/adapter")
 model.eval()
 ```
 
+### 2. `llama.cpp` / `llama-server`（GGUF LoRA）
+
+[`adapter/qwen38-dolly-lora-f32.gguf`](./adapter/qwen38-dolly-lora-f32.gguf) を、`huihui-ai/Huihui-Qwen3.8-27B-abliterated-GGUF`（layers 18–51 ablated 版、`UD-Q5_K_XL` 等）と組み合わせてそのまま使用できます。思考モード（特に `reasoning_effort="xhigh"`）を使う場合は、Greedy を避け **公式推奨サンプリング（`temperature=1.0`, `top_p=0.95`, `top_k=20`）** を指定してください。
+
+```bash
+llama-server \
+  --model Huihui-Qwen3.8-27B-abliterated-UD-Q5_K_XL.gguf \
+  --lora ./qwen38-27b/adapter/qwen38-dolly-lora-f32.gguf \
+  --jinja --flash-attn on
+```
+
 ---
 
 ## ファイル構成
 
 - [`README.md`](./README.md) — 英語版 README
 - [`README.ja.md`](./README.ja.md) — 日本語版 README（このファイル）
-- [`adapter/`](./adapter) — 学習済み LoRA アダプター（`adapter_model.safetensors` 約 66.0 MB、`adapter_config.json`、`README.md`）
-- [`results/`](./results) — ベンチマーク集計 JSON および学習ログ（`bench-qwen38-metrics.json`, `metrics.json`, `train-log.jsonl`）
+- [`adapter/`](./adapter) — 学習済み LoRA アダプター（PEFT 版 `adapter_model.safetensors` 約 66.0 MB、`llama.cpp` 用 GGUF 版 `qwen38-dolly-lora-f32.gguf` 約 66.0 MB、`adapter_config.json`、`README.md`）
+- [`results/`](./results) — ベンチマーク集計 JSON・学習ログ・思考 `xhigh` ループ検証集計（`bench-qwen38-metrics.json`, `metrics.json`, `train-log.jsonl`, `xhigh-loop-metrics.json`）
 
 ## ライセンス
 
